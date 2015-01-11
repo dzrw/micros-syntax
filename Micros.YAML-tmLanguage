@@ -56,12 +56,17 @@ patterns:
     '6': {name: storage.type.micros}
     '7': {name: constant.numeric.micros}
 
-- comment: "match stuff like: format Foo as ..."
-  match: \b(format)\s+([a-zA-Z_]\w*)\s+\b(as)\b\s+
-  captures:
-    '0': {name: meta.format.micros}
-    '1': {name: keyword.control.source.micros}
-    '3': {name: keyword.control.source.micros}
+- comment: "match stuff like: format @FOO as ..."
+  begin: \b(format)\b
+  beginCaptures:
+    '1': {name: keyword.control.micros}
+  end: \b(as)\b
+  endCaptures:
+    '1': {name: keyword.control.micros}
+  patterns:
+  - include: $self
+  - name: support.other.micros
+    match: .
 
 - comment: "match stuff like: for i = 1 to ..."
   begin: \b(for)\b

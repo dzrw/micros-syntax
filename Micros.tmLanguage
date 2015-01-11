@@ -181,28 +181,41 @@
 			<string>\b(event)\s+([a-zA-Z_$]\w*)(\s+(:)\s+(([A-Z\$])?([1-9][0-9]*)))?</string>
 		</dict>
 		<dict>
-			<key>captures</key>
+			<key>begin</key>
+			<string>\b(format)\b</string>
+			<key>beginCaptures</key>
 			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>meta.format.micros</string>
-				</dict>
 				<key>1</key>
 				<dict>
 					<key>name</key>
-					<string>keyword.control.source.micros</string>
-				</dict>
-				<key>3</key>
-				<dict>
-					<key>name</key>
-					<string>keyword.control.source.micros</string>
+					<string>keyword.control.micros</string>
 				</dict>
 			</dict>
 			<key>comment</key>
-			<string>match stuff like: format Foo as ...</string>
-			<key>match</key>
-			<string>\b(format)\s+([a-zA-Z_]\w*)\s+\b(as)\b\s+</string>
+			<string>match stuff like: format @FOO as ...</string>
+			<key>end</key>
+			<string>\b(as)\b</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.control.micros</string>
+				</dict>
+			</dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>$self</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>.</string>
+					<key>name</key>
+					<string>support.other.micros</string>
+				</dict>
+			</array>
 		</dict>
 		<dict>
 			<key>begin</key>
