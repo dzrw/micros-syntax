@@ -1,0 +1,132 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+---
+name: Micros
+scopeName: source.syntax_name
+fileTypes: [isl]
+uuid: 0b51044e-4929-482f-950b-811e54628ab5
+
+patterns:
+## first, match the global stuff
+- include: '#comment'
+- include: '#numeric_constants'
+- include: '#keywords_control'
+- include: '#strings'
+
+- comment: System variables
+  match: (\@[A-Z_][A-Z0-9_]*)\b
+  captures:
+    '1': {name: support.constant.micros}
+
+- comment: Windows DLL functions
+  match: \b(DLLLoad|DLLCall|DLLFree|DLLCall_CDECL)\b
+  captures:
+    '1': {name: support.function.win32.micros}
+
+- comment: User-defined variables
+  match: \b(var|ref|rxmsg)\b
+  captures:
+    '1': {name: storage.micros}
+
+- comment: "match stuff like foobar: N99"
+  match: \b([a-zA-Z_][a-zA-Z0-9_]*)(\[([1-9][0-9]*)\])?\s+(:)\s+(([A-Z\$])?([1-9][0-9]*))\b
+  captures:
+    '1': {name: variable.micros}
+    '3': {name: constant.numeric.micros}
+    '4': {name: keyword.operator.micros}
+    '6': {name: storage.type.micros}
+    '7': {name: constant.numeric.micros}
+
+- comment: "match stuff like: sub mysub(var a : A20, var b : N32)"
+  match: \b(sub)\s+([a-zA-Z_$]\w*)(\s*(\()(.*?)(\)))?
+  captures:
+    '0': {name: meta.function.micros}
+    '1': {name: storage.type.function.micros}
+    '2': {name: entity.name.function.micros}
+    '4': {name: punctuation.definition.parameters.begin.micros}
+    '5': {name: variable.parameter.function.micros}
+    '6': {name: punctuation.definition.parameters.end.micros}
+
+- comment: "match stuff like: event inq : 5"
+  match: \b(event)\s+([a-zA-Z_$]\w*)(\s+(:)\s+(([A-Z\$])?([1-9][0-9]*)))?
+  captures:
+    '0': {name: meta.function.micros}
+    '1': {name: storage.type.function.micros}
+    '2': {name: entity.name.function.micros}
+    '4': {name: keyword.operator.micros}
+    '6': {name: storage.type.micros}
+    '7': {name: constant.numeric.micros}
+
+- comment: "match stuff like: format Foo as ..."
+  match: \b(format)\s+([a-zA-Z_]\w*)\s+\b(as)\b\s+
+  captures:
+    '0': {name: meta.format.micros}
+    '1': {name: keyword.control.source.micros}
+    '3': {name: keyword.control.source.micros}
+
+- match: \b(endsub|endevent)\b
+  captures:
+    '1': {name: storage.type.function.block.end.micros}
+
+- include: '#operators'
+
+- comment: built-in functions
+  match: \b(mid|len|key|rxmsg|txmsg)\b
+  captures:
+    '0': {name: support.function.micros}
+
+# All other stuff
+
+- match: \.
+  captures:
+    '0': {name: meta.delimiter.method.period.micros}
+
+- match: \(|\)
+  captures:
+    '0': {name: meta.brace.round.micros}
+
+- match: \{|\}
+  captures:
+    '0': {name: meta.brace.curly.micros}
+
+- match: \[|\]
+  captures:
+    '0': {name: meta.brace.square.micros}
+
+repository:
+
+# control sequences
+  comment:
+    match: ((//).*$\n?)
+    captures:
+      '1': {name: comment.line.double-slash.micros}
+      '2': {name: punctuation.definition.comment.line.micros}
+
+  numeric_constants:
+    match: \b([0-9]+\.?[0-9]*)\b
+    captures:
+      '1': {name: constant.numeric.source.micros}
+
+  keywords_control:
+    match: \b(if|elseif|else|endif|for|endfor|while|endwhile|call|exitwitherror|exitcontinue)\b
+    captures:
+      '1': {name: keyword.control.source.micros}
+
+  strings:
+    comment: Double-quoted strings
+    name: string.quoted.double.source.micros
+    begin: \" 
+    beginCaptures:
+      '0': {name: punctuation.definition.string.begin.source.micros}
+    end: \"
+    endCaptures:
+      '0': {name: punctuation.definition.string.end.source.micros}
+    patterns:
+    - match: \\.
+      captures:
+        '1': {name: constant.character.escape.source.micros}
+
+  operators:
+    match: \*|\/|\%|\+|\-|\&|\||\=|>=|>|<|<=|<>|\b(not|and|or)\b
+    captures:
+      '0': {name: keyword.operator.binary.micros}
+...
