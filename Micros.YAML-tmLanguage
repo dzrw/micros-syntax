@@ -63,6 +63,18 @@ patterns:
     '1': {name: keyword.control.source.micros}
     '3': {name: keyword.control.source.micros}
 
+- comment: "match stuff like: for i = 1 to ..."
+  begin: \b(for)\b
+  beginCaptures:
+    '1': {name: keyword.control.micros}
+  end: \b(to)\b
+  endCaptures:
+    '1': {name: keyword.control.micros}
+  patterns:
+  - include: $self
+  - name: support.other.micros
+    match: .
+
 - match: \b(endsub|endevent)\b
   captures:
     '1': {name: storage.type.function.block.end.micros}
@@ -107,7 +119,7 @@ repository:
       '1': {name: constant.numeric.source.micros}
 
   keywords_control:
-    match: \b(if|elseif|else|endif|for|endfor|while|endwhile|call|exitwitherror|exitcontinue)\b
+    match: \b(if|elseif|else|endif|endfor|while|endwhile|call|exitwitherror|exitcontinue)\b
     captures:
       '1': {name: keyword.control.source.micros}
 

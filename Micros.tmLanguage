@@ -205,6 +205,43 @@
 			<string>\b(format)\s+([a-zA-Z_]\w*)\s+\b(as)\b\s+</string>
 		</dict>
 		<dict>
+			<key>begin</key>
+			<string>\b(for)\b</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.control.micros</string>
+				</dict>
+			</dict>
+			<key>comment</key>
+			<string>match stuff like: for i = 1 to ...</string>
+			<key>end</key>
+			<string>\b(to)\b</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.control.micros</string>
+				</dict>
+			</dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>$self</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>.</string>
+					<key>name</key>
+					<string>support.other.micros</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
 			<key>captures</key>
 			<dict>
 				<key>1</key>
@@ -314,7 +351,7 @@
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>\b(if|elseif|else|endif|for|endfor|while|endwhile|call|exitwitherror|exitcontinue)\b</string>
+			<string>\b(if|elseif|else|endif|endfor|while|endwhile|call|exitwitherror|exitcontinue)\b</string>
 		</dict>
 		<key>numeric_constants</key>
 		<dict>
